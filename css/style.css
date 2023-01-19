@@ -34,6 +34,23 @@ h2 {
 .wrapper .shop {
   flex: 1.5;
 }
+.wrapper .shop .shoping-details {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+.wrapper .shop .shoping-details .price {
+  flex: 2;
+}
+.wrapper .shop .shoping-details .quantity,
+.wrapper .shop .shoping-details .add-to-cart {
+  flex: 1;
+}
+.wrapper .shop .shoping-details .add-remove {
+  flex: 0.5;
+  display: flex;
+  flex-direction: column;
+}
 .wrapper .cart {
   flex: 1;
 }

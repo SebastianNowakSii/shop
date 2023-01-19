@@ -36,6 +36,28 @@ h2 {
     
     .shop {
         flex: 1.5;
+
+        .shoping-details {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+
+            .price {
+                flex: 2;
+            }
+
+            .quantity,
+            .add-to-cart {
+                flex: 1;
+            }
+
+            .add-remove {
+                flex: .5;
+                display: flex;
+                flex-direction: column;
+            }
+
+        }
     }
 
     .cart {
