@@ -27,8 +27,6 @@ h2 {
     flex-wrap: wrap;
     gap: 30px;
     justify-content: center;
-    align-self: center;
-    margin: 2em 5em;
 
     .container {
         border: 2px solid #bababa;
@@ -37,8 +35,16 @@ h2 {
     .shop {
         flex: 1.5;
 
+        .shop-items {
+            padding: 1em;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            gap: 1em;
+            align-items: start;
+        }
+
         .shop-item {
-            width: 30%;
             border: 1px solid #575757;
             height: auto;
         }
@@ -108,6 +114,9 @@ h2 {
 
     .cart {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         .heading {
             justify-content: flex-end;
@@ -126,9 +135,9 @@ h2 {
         }
     }
 
-    .items {
-        height: 70vh;
-    }
+    // .items {
+    //     height: auto;
+    // }
 }
 
 

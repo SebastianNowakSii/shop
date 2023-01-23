@@ -4,6 +4,7 @@ const products = [
         name: "Książka 1",
         manufacturer: "Wydawnictwo Literackie",
         price: 29.99,
+        quantity: 0,
         description: "Ostatni raz płakałem tak czytając O psie, który jeżdził koleją",
     },
     {
@@ -12,6 +13,7 @@ const products = [
         manufacturer: "Wydawnictwo Literackie",
         price: .99,
         description: "Beznadzieja, straszne to jest",
+        quantity: 2,
     },
     {
         id: 2,
@@ -19,6 +21,7 @@ const products = [
         manufacturer: "Wydawnictwo Literackie",
         price: 29.99,
         description: "Ostatni raz płakałem tak czytając O psie, który jeżdził koleją",
+        quantity: 1,
     },
     {
         id: 3,
@@ -26,6 +29,7 @@ const products = [
         manufacturer: "Wydawnictwo Literackie",
         price: .99,
         description: "Beznadzieja, straszne to jest",
+        quantity: 1,
     },
 ];
 
