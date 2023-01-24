@@ -20,6 +20,10 @@ h2 {
   margin: 0 0.5em;
 }
 
+.more {
+  background-color: red;
+}
+
 .wrapper {
   display: flex;
   flex-wrap: wrap;

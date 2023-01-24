@@ -2,6 +2,8 @@ import products from './products.js';
 
 const shopItems = document.querySelector(".shop-items");
 const cartItems = document.querySelector(".cart-items");
+const moreBtns = document.querySelectorAll(".more");
+const lessBtns = document.querySelectorAll(".less");
 
 function displayItems() {
     products.forEach( (product) => {
@@ -13,8 +15,8 @@ function displayItems() {
                 <p>${product.description}</p>
                 <ul class="shoping-details">
                     <li class="price">${product.price}</li>
-                    <li class="quantity"></li>
-                    <li class="add-remove"><button>+</button><button>-</button></li>
+                    <li class="quantity">${product.quantity}</li>
+                    <li class="add-remove"><button class="more">+</button><button>-</button></li>
                     <li class="add-to-cart"><button class="add-btn" id=${product.id}><i class="ph-shopping-cart-bold"></i></button></li>
                 </ul>
             </div>
@@ -57,8 +59,7 @@ function updateCart() {
 function displayCartItems() {
     cartItems.innerHTML = "";
     cart.forEach( (product) => {
-        // cartItems.innerHTML += `
-        const cartItem = `
+        cartItems.innerHTML += `
             <div class="cart-item">
             <h4>${product.name}</h4>
             <h5>${product.manufacturer}</h5>
@@ -66,45 +67,51 @@ function displayCartItems() {
             <ul class="shoping-details">
                 <li class="price">${product.price}</li>
                 <li class="quantity">${product.quantity}</li>
-                <li class="add-remove"><button class="more" id=${product.id}>+</button><button>-</button></li>
-                <li class="add-to-cart"><button class="add-btn" id=${product.id}><i class="ph-shopping-cart-bold"></i></button></li>
+                <li class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></li>
             </ul>
             </div>
         `;
-        const myFragment = document.createRange().createContextualFragment(cartItem);
-        cartItems.appendChild(myFragment);
-        console.log(myFragment);
     });
-        const moreBtns = document.querySelectorAll(".more");
+    const moreBtns = document.querySelectorAll(".more");
+    moreBtns.forEach(moreBtn => {
+        moreBtn.addEventListener("click", increaseQuantity);
+    });
 
-        moreBtns.forEach(moreBtn => {
-        moreBtn.addEventListener("click", function() {
-            console.log("it works");
+    const lessBtns = document.querySelectorAll(".less");
+    lessBtns.forEach(lessBtn => {
+        lessBtn.addEventListener("click", decreaseQuantity);
     });
+};
+
+
+moreBtns.forEach(moreBtn => {
+    moreBtn.addEventListener("click", increaseQuantity);
 });
+
+function increaseQuantity() {
+    cart = cart.map((product) => {
+        let quantity = product.quantity;
+        if (product.id == this.id) {
+                quantity++;
+        }
+        return {
+            ...product,
+            quantity,
+        };
+    });
+    updateCart();
 }
 
 
-//Próba zmiany ilości po Sebciowemu
-const moreBtns = document.querySelectorAll(".more");
-
-moreBtns.forEach(moreBtn => {
-    moreBtn.addEventListener("click", function() {
-        console.log("it works");
-    });
+lessBtns.forEach(lessBtn => {
+    lessBtn.addEventListener("click", decreaseQuantity);
 });
 
-function changeQuantity() {
-    console.log('it works');
+function decreaseQuantity() {
     cart = cart.map((product) => {
         let quantity = product.quantity;
-
         if (product.id == this.id) {
-            // if (action === "minus") {
-            //     quantity--
-            // } else if (action === "plus"){
-                quantity++;
-            // }
+                quantity--;
         }
         return {
             ...product,
