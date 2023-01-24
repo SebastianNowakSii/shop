@@ -3,9 +3,9 @@ import products from './products.js';
 const shopItems = document.querySelector(".shop-items");
 const cartItems = document.querySelector(".cart-items");
 const moreBtns = document.querySelectorAll(".more");
-const lessBtns = document.querySelectorAll(".less");
+const lessBtns = document.querySelectorAll(".less")
 
-function displayItems() {
+function displayShopItems() {
     products.forEach( (product) => {
         const item = `
             <div class="shop-item">
@@ -15,8 +15,8 @@ function displayItems() {
                 <p>${product.description}</p>
                 <ul class="shoping-details">
                     <li class="price">${product.price}</li>
-                    <li class="quantity">${product.quantity}</li>
-                    <li class="add-remove"><button class="more">+</button><button>-</button></li>
+                    <li class="quantity"><input type="number" class="quantity" value=${product.quantity}></input></li>
+                    <li class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></li>
                     <li class="add-to-cart"><button class="add-btn" id=${product.id}><i class="ph-shopping-cart-bold"></i></button></li>
                 </ul>
             </div>
@@ -25,7 +25,7 @@ function displayItems() {
     });
 };
  
-displayItems();
+displayShopItems();
 
 
 const addBtns = Array.from(document.querySelectorAll(".add-btn"));
@@ -60,18 +60,22 @@ function displayCartItems() {
     cartItems.innerHTML = "";
     cart.forEach( (product) => {
         cartItems.innerHTML += `
-            <div class="cart-item">
-            <h4>${product.name}</h4>
-            <h5>${product.manufacturer}</h5>
-            <p>${product.description}</p>
-            <ul class="shoping-details">
-                <li class="price">${product.price}</li>
-                <li class="quantity">${product.quantity}</li>
-                <li class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></li>
-            </ul>
+        <div class="cart-item">
+            <h3>${product.manufacturer}</h3>
+            <div class="added-item">
+                <div class="item-details">
+                    <p>${product.name}</p>
+                    <div class="price">${product.price}</div>
+                    <input type="number" class="quantity" value=${product.quantity}></input>
+                    <div class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></div>
+                </div>
+                <button class="remove-item"><i class="ph-trash-bold"></i></button>
             </div>
+            <div class="subtotal">Total:</div>
+        </div>
         `;
     });
+
     const moreBtns = document.querySelectorAll(".more");
     moreBtns.forEach(moreBtn => {
         moreBtn.addEventListener("click", increaseQuantity);
