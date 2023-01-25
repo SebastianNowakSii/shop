@@ -1,5 +1,4 @@
 import products from './products.js';
-import {addToCart} from './add-to-cart.js';
 
 const shopItems = document.querySelector(".shop-items");
 
