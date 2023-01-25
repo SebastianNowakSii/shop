@@ -4,7 +4,7 @@ const products = [
         name: "Książka 1",
         manufacturer: "Wydawnictwo Literackie",
         price: 29.99,
-        quantity: 1,
+        quantity: 2,
         description: "Ostatni raz płakałem tak czytając O psie, który jeżdził koleją",
     },
     {

@@ -1,12 +1,6 @@
 import cart from './add-to-cart.js';
 import {updateCart} from './update-cart.js';
 
-// const moreBtns = document.querySelectorAll(".more");
-// const lessBtns = document.querySelectorAll(".less");
-
-// moreBtns.forEach(moreBtn => {
-//     moreBtn.addEventListener("click", increaseQuantity);
-// });
 
 function increaseQuantity() {
     cart = cart.map((product) => {
@@ -22,10 +16,6 @@ function increaseQuantity() {
     updateCart();
 }
 
-
-// lessBtns.forEach(lessBtn => {
-//     lessBtn.addEventListener("click", decreaseQuantity);
-// });
 
 function decreaseQuantity() {
     cart = cart.map((product) => {

@@ -6,8 +6,12 @@ const cartItems = document.querySelector(".cart-items");
 const moreBtns = document.querySelectorAll(".more");
 const lessBtns = document.querySelectorAll(".less");
 
+
+
+
 function displayShopItems() {
     products.forEach( (product) => {
+        let totalPrice = (product.price) * (product.quantity);
         const item = `
             <div class="shop-item">
                 <img src="${product.imgSrc}" alt="${product.name}"/>
@@ -15,7 +19,7 @@ function displayShopItems() {
                 <h5>${product.manufacturer}</h5>
                 <p>${product.description}</p>
                 <ul class="shoping-details">
-                    <li class="price product-subtotal">${product.price}</li>
+                    <li class="price product-subtotal">${totalPrice}</li>
                     <li class="quantity"><input type="number" class="quantity" value=${product.quantity}></input></li>
                     <li class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></li>
                     <li class="add-to-cart"><button class="add-btn" id=${product.id}><i class="ph-shopping-cart-bold"></i></button></li>
@@ -52,37 +56,27 @@ function addToCart() {
 
 function updateCart() {
     displayCartItems();
-    // displaySubtotals();
 }
 
-function displaySubtotals() {
-    let productSubtotal = 0;
-    let productQuantity = 0;
-
-    cart.forEach((product) => {
-        productSubtotal += product.price * product.quantity;
-        productQuantity += product.quantity;
-    });
-
-    subtotal.innerHTML = `(${productSubtotal}) $`;
-}
 
 function displayCartItems() {
     cartItems.innerHTML = "";
     cart.forEach( (product) => {
+        let totalPrice = (product.price) * (product.quantity);
+        let subtotal = totalPrice * cart.length;
         cartItems.innerHTML += `
         <div class="cart-item">
             <h3>${product.manufacturer}</h3>
             <div class="added-item">
                 <div class="item-details">
                     <p>${product.name}</p>
-                    <div class="price product-subtotal">${product.price}</div>
+                    <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
                     <input type="number" class="quantity" value=${product.quantity}></input>
                     <div class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></div>
                 </div>
                 <button class="remove-item"><i class="ph-trash-bold"></i></button>
             </div>
-            <div class="subtotal">Total:</div>
+            <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
         </div>
         `;
     });

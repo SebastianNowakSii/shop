@@ -5,9 +5,7 @@ import {increaseQuantity , decreaseQuantity} from './increase-decrease.js';
 displayShopItems();
 
 
-
 const addBtns = Array.from(document.querySelectorAll(".add-btn"));
-
 addBtns.forEach(addBtn => {
     addBtn.addEventListener("click", addToCart);
 });
