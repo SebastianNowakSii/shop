@@ -1,9 +1,10 @@
 import products from './products.js';
 
+
 const shopItems = document.querySelector(".shop-items");
 const cartItems = document.querySelector(".cart-items");
 const moreBtns = document.querySelectorAll(".more");
-const lessBtns = document.querySelectorAll(".less")
+const lessBtns = document.querySelectorAll(".less");
 
 function displayShopItems() {
     products.forEach( (product) => {
@@ -14,7 +15,7 @@ function displayShopItems() {
                 <h5>${product.manufacturer}</h5>
                 <p>${product.description}</p>
                 <ul class="shoping-details">
-                    <li class="price">${product.price}</li>
+                    <li class="price product-subtotal">${product.price}</li>
                     <li class="quantity"><input type="number" class="quantity" value=${product.quantity}></input></li>
                     <li class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></li>
                     <li class="add-to-cart"><button class="add-btn" id=${product.id}><i class="ph-shopping-cart-bold"></i></button></li>
@@ -37,10 +38,8 @@ addBtns.forEach(addBtn => {
 });
 
 function addToCart() {
-    // let cartItem = products.find((product) => product.id == this.id);
     if(cart.some((cartItem) => cartItem.id == this.id)) {
-        alert("Product already in cart!")
-        // changeQuantity("plus", this.id);
+        alert("Product already in cart!");
     } else {
         let cartItem = products.find((product) => product.id == this.id);
         cart.push({
@@ -56,6 +55,18 @@ function updateCart() {
     // displaySubtotals();
 }
 
+function displaySubtotals() {
+    let productSubtotal = 0;
+    let productQuantity = 0;
+
+    cart.forEach((product) => {
+        productSubtotal += product.price * product.quantity;
+        productQuantity += product.quantity;
+    });
+
+    subtotal.innerHTML = `(${productSubtotal}) $`;
+}
+
 function displayCartItems() {
     cartItems.innerHTML = "";
     cart.forEach( (product) => {
@@ -65,7 +76,7 @@ function displayCartItems() {
             <div class="added-item">
                 <div class="item-details">
                     <p>${product.name}</p>
-                    <div class="price">${product.price}</div>
+                    <div class="price product-subtotal">${product.price}</div>
                     <input type="number" class="quantity" value=${product.quantity}></input>
                     <div class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></div>
                 </div>
@@ -115,7 +126,9 @@ function decreaseQuantity() {
     cart = cart.map((product) => {
         let quantity = product.quantity;
         if (product.id == this.id) {
+            if(quantity > 1 ) {
                 quantity--;
+            }
         }
         return {
             ...product,
