@@ -1,4 +1,3 @@
-// import {increaseQuantity , decreaseQuantity} from './increase-decrease.js';
 import {updateCart} from './update-cart.js';
 
 let cart = [];

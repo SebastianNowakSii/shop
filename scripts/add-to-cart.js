@@ -18,6 +18,6 @@ function addToCart(id) {
 
 
 export {addToCart};
-export default cart;
+
 
 window.addToCart = addToCart;

@@ -1,14 +1,6 @@
 import products from './products.js';
 
-
 const shopItems = document.querySelector(".shop-items");
-const cartItems = document.querySelector(".cart-items");
-const moreBtns = document.querySelectorAll(".more");
-const lessBtns = document.querySelectorAll(".less");
-
-function sayHi(){
-    console.log(`Hi!`);
-};
 
 function displayShopItems() {
     products.forEach( (product) => {
@@ -20,125 +12,82 @@ function displayShopItems() {
                 <h5>${product.manufacturer}</h5>
                 <p>${product.description}</p>
                 <ul class="shoping-details">
-                    <li class="price product-subtotal">${totalPrice}</li>
-                    <li class="quantity"><input type="number" class="quantity" value=${product.quantity}></input></li>
-                    <li class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></li>
-                    <li class="add-to-cart"><button class="add-btn" id=${product.id}><i class="ph-shopping-cart-bold"></i></button></li>
+                    <li class="price product-subtotal">${totalPrice.toFixed(2)}</li>
+                    <li class="quantity"><input type="number" id=${product.id} class="how-many-input" value=${product.quantity}></li> 
+                    <li class="add-remove"><button onclick="update('plus', ${product.id})">+</button><button onclick="update('minus', ${product.id})">-</button></li>
+                    <li class="add-to-cart"><button class="add-btn" onclick="addToCart(${product.id})"><i class="ph-shopping-cart-bold"></i></button></li>
                 </ul>
             </div>
         `;
         shopItems.innerHTML += item;
     });
 };
- 
+
+function update(action, id) {
+    let input = document.getElementById(id);
+    let value = input.value;
+    if (action === "minus" && value > 1) {
+        value--;
+    } else if (action === "plus"){
+        value++;
+    };
+    input.value = value;
+};
+
 displayShopItems();
 
-
-const addBtns = Array.from(document.querySelectorAll(".add-btn"));
-
-let cart = [];
-
-addBtns.forEach(addBtn => {
-    addBtn.addEventListener("click", addToCart);
-});
-
-function addToCart() {
-    if(cart.some((cartItem) => cartItem.id == this.id)) {
-        alert("Product already in cart!");
+function addToCart(id) {
+    let input = document.getElementById(id);
+    if(cart.some((cartItem) => cartItem.id === id)) {
+        changeQuantity('plus', id);
     } else {
-        let cartItem = products.find((product) => product.id == this.id);
+        const cartItem = products.find((product) => product.id === id);
         cart.push({
             ...cartItem,
-            quantity: 1,
+            quantity: input.value,
         });
-    };
+    }
+    input.value = 1;
     updateCart();
 };
 
+let cart = [];
 
-
-function updateCart() {
-    displayCartItems();
-}
-
+const cartItems = document.querySelector(".cart-items");
 
 function displayCartItems() {
     cartItems.innerHTML = "";
     cart.forEach( (product) => {
         let totalPrice = (product.price) * (product.quantity);
-        let subtotal = totalPrice * cart.length;
+        let subtotal =+ totalPrice;
         cartItems.innerHTML += `
-            <div class="cart-item">
-                <h3>${product.manufacturer}</h3>
-                <div class="added-item">
-                    <div class="item-details">
-                        <p>${product.name}</p>
-                        <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
-                        <input type="number" class="quantity" value=${product.quantity}></input>
-                        <div class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></div>
-                    </div>
-                    <button class="remove-item" onclick="removeFromCart()" id=${product.id}><i class="ph-trash-bold"></i></button>
+        <div class="cart-item">
+            <h3>${product.manufacturer}</h3>
+            <div class="added-item">
+                <div class="item-details">
+                    <p>${product.name}</p>
+                    <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
+                    <input type="number" class="quantity" value=${product.quantity}></input>
+                    <div class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></div>
                 </div>
-                <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
+                <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
             </div>
+            <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
+        </div>
         `;
     });
-
-    const moreBtns = document.querySelectorAll(".more");
-    moreBtns.forEach(moreBtn => {
-        moreBtn.addEventListener("click", increaseQuantity);
-    });
-
-    const lessBtns = document.querySelectorAll(".less");
-    lessBtns.forEach(lessBtn => {
-        lessBtn.addEventListener("click", decreaseQuantity);
-    });
-
-    // const removeBtns = document.querySelectorAll(".remove-item");
-
-    // removeBtns.forEach(removeBtn => {
-    // removeBtn.addEventListener("click", removeFromCart);
-    // });
-
-    // function removeFromCart() {
-    // cart = cart.filter((item) => item.id != this.id);
-
-    // updateCart();
-    // };
-
-    window.removeFromCart = removeFromCart;
 };
 
-
-moreBtns.forEach(moreBtn => {
-    moreBtn.addEventListener("click", increaseQuantity);
-});
-
-function increaseQuantity() {
+function changeQuantity(action, id) {
     cart = cart.map((product) => {
         let quantity = product.quantity;
-        if (product.id == this.id) {
-                quantity++;
-        }
-        return {
-            ...product,
-            quantity,
-        };
-    });
-    updateCart();
-}
-
-
-lessBtns.forEach(lessBtn => {
-    lessBtn.addEventListener("click", decreaseQuantity);
-});
-
-function decreaseQuantity() {
-    cart = cart.map((product) => {
-        let quantity = product.quantity;
-        if (product.id == this.id) {
-            if(quantity > 1 ) {
+        if (product.id === id) {
+            if (action === "minus" && product.quantity > 1) {
                 quantity--;
+                // update(product.id);
+            } else if (action === "plus"){
+                quantity++;
+                // update(product.id); //to z tego dzisiejszego tutorialu;
             }
         }
         return {
@@ -147,19 +96,19 @@ function decreaseQuantity() {
         };
     });
     updateCart();
+};
+
+function removeFromCart(id) {
+    cart = cart.filter((item) => item.id !== id);
+    updateCart();
+};
+
+function updateCart() {
+    displayCartItems();
 }
 
 
-
-
-
-
-
-
-
-
-
-// const myFragment = document.createRange().createContextualFragment(cartItem);
-// cartItems.appendChild(myFragment);
-
-window.sayHi = sayHi; //that's working;
+window.changeQuantity = changeQuantity;
+window.removeFromCart = removeFromCart;
+window.addToCart = addToCart;
+window.update = update;
