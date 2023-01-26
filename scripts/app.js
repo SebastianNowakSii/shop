@@ -2,8 +2,8 @@ import {displayShopItems} from './shop.js';
 import {addToCart} from './add-to-cart.js';
 import {increaseQuantity , decreaseQuantity} from './increase-decrease.js';
 
-displayShopItems();
 
+displayShopItems();
 
 const addBtns = Array.from(document.querySelectorAll(".add-btn"));
 addBtns.forEach(addBtn => {

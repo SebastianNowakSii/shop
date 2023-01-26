@@ -1,4 +1,4 @@
-import cart from './add-to-cart.js';
+import cart from './cart.js';
 import {updateCart} from './update-cart.js';
 
 

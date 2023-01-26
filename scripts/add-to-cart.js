@@ -1,8 +1,9 @@
 import products from './products.js';
 import {updateCart} from './update-cart.js';
+import cart from './cart.js';
 
 
-let cart = [];
+// let cart = [];
 
 function addToCart() {
     console.log('it works');

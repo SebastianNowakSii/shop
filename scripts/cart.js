@@ -1,6 +1,6 @@
-import cart from './add-to-cart.js';
 import {increaseQuantity , decreaseQuantity} from './increase-decrease.js';
 
+let cart = [];
 
 const cartItems = document.querySelector(".cart-items");
 
@@ -19,7 +19,7 @@ function displayCartItems() {
                     <input type="number" class="quantity" value=${product.quantity}></input>
                     <div class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></div>
                 </div>
-                <button class="remove-item"><i class="ph-trash-bold"></i></button>
+                <button class="remove-item" onclick="removeIt()"><i class="ph-trash-bold"></i></button>
             </div>
             <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
         </div>
@@ -35,6 +35,13 @@ function displayCartItems() {
     lessBtns.forEach(lessBtn => {
         lessBtn.addEventListener("click", decreaseQuantity);
     });
+
+    function removeIt() {
+        console.log("its gonna be removed!");
+    };
+
+    window.removeIt = removeIt;
 };
 
 export {displayCartItems};
+export default cart;

@@ -6,8 +6,9 @@ const cartItems = document.querySelector(".cart-items");
 const moreBtns = document.querySelectorAll(".more");
 const lessBtns = document.querySelectorAll(".less");
 
-
-
+function sayHi(){
+    console.log(`Hi!`);
+};
 
 function displayShopItems() {
     products.forEach( (product) => {
@@ -54,6 +55,8 @@ function addToCart() {
     updateCart();
 };
 
+
+
 function updateCart() {
     displayCartItems();
 }
@@ -65,19 +68,19 @@ function displayCartItems() {
         let totalPrice = (product.price) * (product.quantity);
         let subtotal = totalPrice * cart.length;
         cartItems.innerHTML += `
-        <div class="cart-item">
-            <h3>${product.manufacturer}</h3>
-            <div class="added-item">
-                <div class="item-details">
-                    <p>${product.name}</p>
-                    <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
-                    <input type="number" class="quantity" value=${product.quantity}></input>
-                    <div class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></div>
+            <div class="cart-item">
+                <h3>${product.manufacturer}</h3>
+                <div class="added-item">
+                    <div class="item-details">
+                        <p>${product.name}</p>
+                        <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
+                        <input type="number" class="quantity" value=${product.quantity}></input>
+                        <div class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></div>
+                    </div>
+                    <button class="remove-item" onclick="removeFromCart()" id=${product.id}><i class="ph-trash-bold"></i></button>
                 </div>
-                <button class="remove-item"><i class="ph-trash-bold"></i></button>
+                <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
             </div>
-            <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
-        </div>
         `;
     });
 
@@ -90,6 +93,20 @@ function displayCartItems() {
     lessBtns.forEach(lessBtn => {
         lessBtn.addEventListener("click", decreaseQuantity);
     });
+
+    // const removeBtns = document.querySelectorAll(".remove-item");
+
+    // removeBtns.forEach(removeBtn => {
+    // removeBtn.addEventListener("click", removeFromCart);
+    // });
+
+    // function removeFromCart() {
+    // cart = cart.filter((item) => item.id != this.id);
+
+    // updateCart();
+    // };
+
+    window.removeFromCart = removeFromCart;
 };
 
 
@@ -144,3 +161,5 @@ function decreaseQuantity() {
 
 // const myFragment = document.createRange().createContextualFragment(cartItem);
 // cartItems.appendChild(myFragment);
+
+window.sayHi = sayHi; //that's working;
