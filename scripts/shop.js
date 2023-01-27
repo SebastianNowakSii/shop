@@ -13,9 +13,9 @@ function displayShopItems() {
                 <p>${product.description}</p>
                 <ul class="shoping-details">
                     <li class="price product-subtotal">${totalPrice.toFixed(2)}</li>
-                    <li class="quantity"><input type="number" class="quantity" value=${product.quantity}></input></li>
-                    <li class="add-remove"><button class="more" id=${product.id}>+</button><button class="less" id=${product.id}>-</button></li>
-                    <li class="add-to-cart"><button class="add-btn" id=${product.id}><i class="ph-shopping-cart-bold"></i></button></li>
+                    <li class="quantity"><input onchange="" type="number" name="shop-input" class="how-many-input" value=1></li> 
+                    <li class="add-remove"><button onclick="changeNumberOfProducts('plus', ${product.id})">+</button><button onclick="changeNumberOfProducts('minus', ${product.id})">-</button></li>
+                    <li class="add-to-cart"><button class="add-btn" onclick="addToCart(${product.id})"><i class="ph-shopping-cart-bold"></i></button></li>
                 </ul>
             </div>
         `;
@@ -24,3 +24,5 @@ function displayShopItems() {
 };
 
 export {displayShopItems};
+
+

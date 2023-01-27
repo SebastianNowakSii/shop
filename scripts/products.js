@@ -10,7 +10,7 @@ const products = [
     {
         id: 1,
         name: "Książka 2",
-        manufacturer: "Wydawnictwo Literackie",
+        manufacturer: "Znak",
         price: 20.20,
         description: "Beznadzieja, straszne to jest",
         quantity: 1,
@@ -18,7 +18,7 @@ const products = [
     {
         id: 2,
         name: "Książka 3",
-        manufacturer: "Wydawnictwo Literackie",
+        manufacturer: "Karakter",
         price: 30.00,
         description: "Ostatni raz płakałem tak czytając O psie, który jeżdził koleją",
         quantity: 1,
@@ -26,7 +26,7 @@ const products = [
     {
         id: 3,
         name: "Książka 4",
-        manufacturer: "Wydawnictwo Literackie",
+        manufacturer: "Znak",
         price: 15.00,
         description: "Beznadzieja, straszne to jest",
         quantity: 1,
