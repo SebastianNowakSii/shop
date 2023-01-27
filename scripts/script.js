@@ -22,6 +22,7 @@ function displayShopItems() {
         shopItems.innerHTML += item;
     });
 };
+displayShopItems();
 
 function update(action, id) {
     let input = document.getElementById(id);
@@ -33,8 +34,6 @@ function update(action, id) {
     };
     input.value = value;
 };
-
-displayShopItems();
 
 function addToCart(id) {
     let input = document.getElementById(id);
@@ -48,22 +47,52 @@ function addToCart(id) {
         });
     }
     input.value = 1;
+    createSubcarts();
     updateCart();
 };
 
 let cart = [];
+let subCarts = [];
 
 const cartItems = document.querySelector(".cart-items");
 
+// function displayCartItems() {
+//     cartItems.innerHTML = "";
+//     cart.forEach( (product) => {
+//         let totalPrice = (product.price) * (product.quantity);
+//         let subtotal =+ totalPrice;
+//         cartItems.innerHTML += `
+//         <div class="cart-item">
+//             <h3>${product.manufacturer}</h3>
+//             <div class="added-item">
+//                 <div class="item-details">
+//                     <p>${product.name}</p>
+//                     <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
+//                     <input type="number" class="quantity" value=${product.quantity}></input>
+//                     <div class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></div>
+//                 </div>
+//                 <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
+//             </div>
+//             <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
+//         </div>
+//         `;
+//     });
+// };
+
 function displayCartItems() {
+    createSubcarts();
     cartItems.innerHTML = "";
-    cart.forEach( (product) => {
-        let totalPrice = (product.price) * (product.quantity);
-        let subtotal =+ totalPrice;
+    subCarts.forEach( (manufacturer) => {
+        let subtotal = 0;
         cartItems.innerHTML += `
         <div class="cart-item">
-            <h3>${product.manufacturer}</h3>
-            <div class="added-item">
+            <h3>${manufacturer}</h3>`
+        cart.forEach( (product) => {
+            let totalPrice = (product.price) * (product.quantity);
+            subtotal =+ totalPrice;
+            if(product.manufacturer === manufacturer) {
+                cartItems.innerHTML += `
+                <div class="added-item">
                 <div class="item-details">
                     <p>${product.name}</p>
                     <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
@@ -71,12 +100,28 @@ function displayCartItems() {
                     <div class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></div>
                 </div>
                 <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
-            </div>
-            <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
+                </div>
+                `;
+            }
+        });
+        cartItems.innerHTML += `
+        <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
         </div>
         `;
     });
 };
+
+
+function createSubcarts() {
+    const manufacturers = cart.map(product => `${product.manufacturer}`);
+    manufacturers.forEach((manufacturer) => {
+        subCarts.includes(manufacturer) ? null : subCarts.push(manufacturer);
+    });
+    console.log(subCarts);
+};
+
+
+
 
 function changeQuantity(action, id) {
     cart = cart.map((product) => {
@@ -84,10 +129,8 @@ function changeQuantity(action, id) {
         if (product.id === id) {
             if (action === "minus" && product.quantity > 1) {
                 quantity--;
-                // update(product.id);
             } else if (action === "plus"){
                 quantity++;
-                // update(product.id); //to z tego dzisiejszego tutorialu;
             }
         }
         return {
@@ -100,13 +143,13 @@ function changeQuantity(action, id) {
 
 function removeFromCart(id) {
     cart = cart.filter((item) => item.id !== id);
+    createSubcarts();
     updateCart();
 };
 
 function updateCart() {
     displayCartItems();
 }
-
 
 window.changeQuantity = changeQuantity;
 window.removeFromCart = removeFromCart;
