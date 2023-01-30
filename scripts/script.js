@@ -75,12 +75,12 @@ function displayCartItems() {
                 subtotal += totalPrice;
                 cartItem += `
                     <div class="added-item">
-                        <div class="item-details">
-                            <p>${product.name}</p>
-                            <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
-                            <input type="number" class="quantity" value=${product.quantity}></input>
-                            <div class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></div>
-                        </div>
+                        <ul class="item-details">
+                            <li class="item">${product.name}</li>
+                            <li class="price product-subtotal">${totalPrice.toFixed(2)}</li>
+                            <li class="quantity"><input type="number" value=${product.quantity}></li>
+                            <li class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></li>
+                        </ul>
                         <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
                     </div>
                 `;
@@ -96,7 +96,6 @@ function displayCartItems() {
     total.innerHTML = `
         ${grandTotal.toFixed(2)}
     `;
-    console.log(grandTotal);
 };
 
 
