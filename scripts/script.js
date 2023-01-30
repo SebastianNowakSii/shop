@@ -56,59 +56,61 @@ let subCarts = [];
 
 const cartItems = document.querySelector(".cart-items");
 
-// function displayCartItems() {
-//     cartItems.innerHTML = "";
-//     cart.forEach( (product) => {
-//         let totalPrice = (product.price) * (product.quantity);
-//         let subtotal =+ totalPrice;
-//         cartItems.innerHTML += `
-//         <div class="cart-item">
-//             <h3>${product.manufacturer}</h3>
-//             <div class="added-item">
-//                 <div class="item-details">
-//                     <p>${product.name}</p>
-//                     <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
-//                     <input type="number" class="quantity" value=${product.quantity}></input>
-//                     <div class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></div>
-//                 </div>
-//                 <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
-//             </div>
-//             <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
-//         </div>
-//         `;
-//     });
-// };
 
 function displayCartItems() {
     createSubcarts();
     cartItems.innerHTML = "";
+    let innerHTML = ""
     subCarts.forEach( (manufacturer) => {
         let subtotal = 0;
-        cartItems.innerHTML += `
-        <div class="cart-item">
-            <h3>${manufacturer}</h3>`
+        // cartItems.innerHTML += `
+        //     <div class="cart-item">
+        //         <h3>${manufacturer}</h3>
+        //     </div>
+        // `;
+        innerHTML += `
+             <div class="cart-item">
+                 <h3>${manufacturer}</h3>
+        `;
         cart.forEach( (product) => {
             let totalPrice = (product.price) * (product.quantity);
             subtotal =+ totalPrice;
             if(product.manufacturer === manufacturer) {
-                cartItems.innerHTML += `
-                <div class="added-item">
-                <div class="item-details">
-                    <p>${product.name}</p>
-                    <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
-                    <input type="number" class="quantity" value=${product.quantity}></input>
-                    <div class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></div>
-                </div>
-                <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
-                </div>
+                // cartItems.innerHTML += `
+                //     <div class="added-item">
+                //         <div class="item-details">
+                //             <p>${product.name}</p>
+                //             <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
+                //             <input type="number" class="quantity" value=${product.quantity}></input>
+                //             <div class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></div>
+                //         </div>
+                //         <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
+                //     </div>
+                // `;
+                innerHTML += `
+                    <div class="added-item">
+                        <div class="item-details">
+                            <p>${product.name}</p>
+                            <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
+                            <input type="number" class="quantity" value=${product.quantity}></input>
+                            <div class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></div>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
+                    </div>
                 `;
             }
         });
-        cartItems.innerHTML += `
+        // cartItems.innerHTML += `
+        // <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
+        // </div>
+        // `;
+        innerHTML += `
         <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
         </div>
         `;
+        cartItems.innerHTML = innerHTML
     });
+    console.log(innerHTML)
 };
 
 
@@ -117,7 +119,6 @@ function createSubcarts() {
     manufacturers.forEach((manufacturer) => {
         subCarts.includes(manufacturer) ? null : subCarts.push(manufacturer);
     });
-    console.log(subCarts);
 };
 
 
