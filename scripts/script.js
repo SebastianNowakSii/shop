@@ -55,39 +55,25 @@ let cart = [];
 let subCarts = [];
 
 const cartItems = document.querySelector(".cart-items");
+const total = document.querySelector(".total-value");
 
 
 function displayCartItems() {
     createSubcarts();
     cartItems.innerHTML = "";
-    let innerHTML = ""
+    let cartItem = "";
+    let grandTotal = 0;
     subCarts.forEach( (manufacturer) => {
         let subtotal = 0;
-        // cartItems.innerHTML += `
-        //     <div class="cart-item">
-        //         <h3>${manufacturer}</h3>
-        //     </div>
-        // `;
-        innerHTML += `
-             <div class="cart-item">
-                 <h3>${manufacturer}</h3>
+        cartItem += `
+            <div class="cart-item">
+                <h3>${manufacturer}</h3>
         `;
         cart.forEach( (product) => {
-            let totalPrice = (product.price) * (product.quantity);
-            subtotal =+ totalPrice;
             if(product.manufacturer === manufacturer) {
-                // cartItems.innerHTML += `
-                //     <div class="added-item">
-                //         <div class="item-details">
-                //             <p>${product.name}</p>
-                //             <div class="price product-subtotal">${totalPrice.toFixed(2)}</div>
-                //             <input type="number" class="quantity" value=${product.quantity}></input>
-                //             <div class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></div>
-                //         </div>
-                //         <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
-                //     </div>
-                // `;
-                innerHTML += `
+                let totalPrice = (product.price) * (product.quantity);
+                subtotal += totalPrice;
+                cartItem += `
                     <div class="added-item">
                         <div class="item-details">
                             <p>${product.name}</p>
@@ -100,26 +86,28 @@ function displayCartItems() {
                 `;
             }
         });
-        // cartItems.innerHTML += `
-        // <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
-        // </div>
-        // `;
-        innerHTML += `
-        <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
-        </div>
+        cartItem += `
+                <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
+            </div>
         `;
-        cartItems.innerHTML = innerHTML
+        cartItems.innerHTML = cartItem;
+        grandTotal += subtotal;
     });
-    console.log(innerHTML)
+    total.innerHTML = `
+        ${grandTotal.toFixed(2)}
+    `;
+    console.log(grandTotal);
 };
 
 
 function createSubcarts() {
+    subCarts = [];
     const manufacturers = cart.map(product => `${product.manufacturer}`);
     manufacturers.forEach((manufacturer) => {
         subCarts.includes(manufacturer) ? null : subCarts.push(manufacturer);
     });
 };
+
 
 
 
@@ -144,7 +132,6 @@ function changeQuantity(action, id) {
 
 function removeFromCart(id) {
     cart = cart.filter((item) => item.id !== id);
-    createSubcarts();
     updateCart();
 };
 
