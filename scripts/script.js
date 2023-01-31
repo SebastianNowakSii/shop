@@ -2,6 +2,17 @@ import products from './products.js';
 
 const shopItems = document.querySelector(".shop-items");
 
+// let products = [];
+
+// async function fetchProducts() {
+//     const response = await fetch('https://dummyjson.com/products');
+//     const json = await response.json();
+//     products = json.products.map((product) => ({...product, quantity: 1 }));
+//     displayShopItems();
+// }
+// fetchProducts();
+
+
 function displayShopItems() {
     products.forEach( (product) => {
         let totalPrice = (product.price) * (product.quantity);
