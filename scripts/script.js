@@ -1,26 +1,23 @@
-import products from './products.js';
-
+//Fetch and display products in the store
+let products = [];
 const shopItems = document.querySelector(".shop-items");
 
-// let products = [];
-
-// async function fetchProducts() {
-//     const response = await fetch('https://dummyjson.com/products');
-//     const json = await response.json();
-//     products = json.products.map((product) => ({...product, quantity: 1 }));
-//     displayShopItems();
-// }
-// fetchProducts();
-
+async function fetchProducts() {
+    const response = await fetch('https://dummyjson.com/products');
+    const json = await response.json();
+    products = json.products.map((product) => ({...product, quantity: 1 }));
+    displayShopItems();
+}
+fetchProducts();
 
 function displayShopItems() {
     products.forEach( (product) => {
         let totalPrice = (product.price) * (product.quantity);
         const item = `
             <div class="shop-item">
-                <img src="${product.imgSrc}" alt="${product.name}"/>
-                <h4>${product.name}</h4>
-                <h5>${product.manufacturer}</h5>
+                <img src="${product.images[0]}" alt="${product.title}"/>
+                <h4>${product.title}</h4>
+                <h5>${product.brand}</h5>
                 <p>${product.description}</p>
                 <ul class="shoping-details">
                     <li class="price product-subtotal">${totalPrice.toFixed(2)}</li>
@@ -33,7 +30,6 @@ function displayShopItems() {
         shopItems.innerHTML += item;
     });
 };
-displayShopItems();
 
 function update(action, id) {
     let input = document.getElementById(id);
@@ -74,20 +70,20 @@ function displayCartItems() {
     cartItems.innerHTML = "";
     let cartItem = "";
     let grandTotal = 0;
-    subCarts.forEach( (manufacturer) => {
+    subCarts.forEach( (brand) => {
         let subtotal = 0;
         cartItem += `
             <div class="cart-item">
-                <h3>${manufacturer}</h3>
+                <h3>${brand}</h3>
         `;
         cart.forEach( (product) => {
-            if(product.manufacturer === manufacturer) {
+            if(product.brand === brand) {
                 let totalPrice = (product.price) * (product.quantity);
                 subtotal += totalPrice;
                 cartItem += `
                     <div class="added-item">
                         <ul class="item-details">
-                            <li class="item">${product.name}</li>
+                            <li class="item">${product.title}</li>
                             <li class="price product-subtotal">${totalPrice.toFixed(2)}</li>
                             <li class="quantity"><input type="number" value=${product.quantity}></li>
                             <li class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></li>
@@ -112,9 +108,9 @@ function displayCartItems() {
 
 function createSubcarts() {
     subCarts = [];
-    const manufacturers = cart.map(product => `${product.manufacturer}`);
-    manufacturers.forEach((manufacturer) => {
-        subCarts.includes(manufacturer) ? null : subCarts.push(manufacturer);
+    const brands = cart.map(product => `${product.brand}`);
+    brands.forEach((brand) => {
+        subCarts.includes(brand) ? null : subCarts.push(brand);
     });
 };
 
