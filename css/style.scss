@@ -76,6 +76,10 @@ button {
         .shop-item {
             border: 1px solid #575757;
             height: auto;
+
+            img {
+                width: 100px;
+            }
         }
 
         .shoping-details {
@@ -138,7 +142,7 @@ button {
         display: flex;
         flex-direction: column;
         height: fit-content;
-        max-height: 50vh;
+        max-height: 70vh;
 
         .heading {
             justify-content: flex-end;

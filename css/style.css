@@ -73,6 +73,9 @@ button {
   border: 1px solid #575757;
   height: auto;
 }
+.wrapper .shop .shop-item img {
+  width: 100px;
+}
 .wrapper .shop .shoping-details {
   border-top: 1px solid #575757;
   margin: 0;
@@ -126,7 +129,7 @@ button {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  max-height: 50vh;
+  max-height: 70vh;
 }
 .wrapper .cart .heading {
   justify-content: flex-end;
