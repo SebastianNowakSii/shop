@@ -15,9 +15,13 @@ function displayShopItems() {
         let totalPrice = (product.price) * (product.quantity);
         const item = `
             <div class="shop-item">
-                <img src="${product.images[0]}" alt="${product.title}"/>
-                <h4>${product.title}</h4>
-                <h5>${product.brand}</h5>
+                <div class="shop-item-hero">
+                    <img src="${product.images[0]}" alt="${product.title}"/>
+                    <div class="hero-headline">
+                        <h4>${product.title}</h4>
+                        <h5>${product.brand}</h5>
+                    </div>
+                </div>
                 <p>${product.description}</p>
                 <ul class="shoping-details">
                     <li class="price product-subtotal">${totalPrice.toFixed(2)}</li>
@@ -91,7 +95,7 @@ function displayCartItems() {
                         <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
                     </div>
                 `;
-            }
+            };
         });
         cartItem += `
                 <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
