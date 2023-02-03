@@ -1,1 +1,1 @@
-You can see a demo here: https://sebastiannowaksii.github.io/shop/ 
+Link to demo: https://sebastiannowaksii.github.io/shop/ 
