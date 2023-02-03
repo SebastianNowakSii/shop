@@ -42,7 +42,7 @@ function displayShopItems() {
 };
 
 
-//Updating quantity of products before adding to cart
+//Updating quantity of products before adding to the cart
 function update(action, id) {
     let input = document.getElementById(id);
     let value = input.value;
@@ -55,7 +55,7 @@ function update(action, id) {
 };
 
 
-//Adding to cart
+//Adding to the cart
 function addToCart(id) {
     let input = document.getElementById(id);
     if(cart.some((cartItem) => cartItem.id === id)) {
