@@ -18,7 +18,6 @@ async function fetchProducts() {
 
 function displayShopItems() {
     products.forEach( (product) => {
-        let totalPrice = (product.price) * (product.quantity);
         const item = `
             <div class="shop-item">
                 <div class="shop-item-hero">
@@ -30,7 +29,7 @@ function displayShopItems() {
                 </div>
                 <p>${product.description}</p>
                 <ul class="shoping-details">
-                    <li class="price product-subtotal">${totalPrice.toFixed(2)}</li>
+                    <li class="price product-subtotal">${product.price}</li>
                     <li class="quantity"><input type="number" id=${product.id} class="how-many-input" value=${product.quantity}></li> 
                     <li class="add-remove"><button onclick="update('plus', ${product.id})">+</button><button onclick="update('minus', ${product.id})">-</button></li>
                     <li class="add-to-cart"><button class="add-btn" onclick="addToCart(${product.id})"><i class="ph-shopping-cart-bold"></i></button></li>
