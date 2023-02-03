@@ -1,26 +1,33 @@
-import products from './products.js';
+
+let products = [];
+let cart = [];
 
 const shopItems = document.querySelector(".shop-items");
+const cartItems = document.querySelector(".cart-items");
+const total = document.querySelector(".total-value");
 
-// let products = [];
 
-// async function fetchProducts() {
-//     const response = await fetch('https://dummyjson.com/products');
-//     const json = await response.json();
-//     products = json.products.map((product) => ({...product, quantity: 1 }));
-//     displayShopItems();
-// }
-// fetchProducts();
-
+//Fetch and display products in the store
+fetchProducts();
+async function fetchProducts() {
+    const response = await fetch('https://dummyjson.com/products');
+    const json = await response.json();
+    products = json.products.map((product) => ({...product, quantity: 1 }));
+    displayShopItems();
+};
 
 function displayShopItems() {
     products.forEach( (product) => {
         let totalPrice = (product.price) * (product.quantity);
         const item = `
             <div class="shop-item">
-                <img src="${product.imgSrc}" alt="${product.name}"/>
-                <h4>${product.name}</h4>
-                <h5>${product.manufacturer}</h5>
+                <div class="shop-item-hero">
+                    <img src="${product.images[0]}" alt="${product.title}"/>
+                    <div class="hero-headline">
+                        <h4>${product.title}</h4>
+                        <h5>${product.brand}</h5>
+                    </div>
+                </div>
                 <p>${product.description}</p>
                 <ul class="shoping-details">
                     <li class="price product-subtotal">${totalPrice.toFixed(2)}</li>
@@ -33,8 +40,9 @@ function displayShopItems() {
         shopItems.innerHTML += item;
     });
 };
-displayShopItems();
 
+
+//Updating quantity of products before adding to cart
 function update(action, id) {
     let input = document.getElementById(id);
     let value = input.value;
@@ -46,10 +54,12 @@ function update(action, id) {
     input.value = value;
 };
 
+
+//Adding to cart
 function addToCart(id) {
     let input = document.getElementById(id);
     if(cart.some((cartItem) => cartItem.id === id)) {
-        changeQuantity('plus', id);
+        changeQuantity('plus', id, input.value);
     } else {
         const cartItem = products.find((product) => product.id === id);
         cart.push({
@@ -58,44 +68,47 @@ function addToCart(id) {
         });
     }
     input.value = 1;
-    createSubcarts();
-    updateCart();
+    displayCartItems();
 };
 
-let cart = [];
-let subCarts = [];
 
-const cartItems = document.querySelector(".cart-items");
-const total = document.querySelector(".total-value");
-
+//Creating subcarts per product brand and displaying products in the cart
+function createSubcarts() {
+    subCarts = [];
+    const brands = cart.map(product => `${product.brand}`);
+    brands.forEach((brand) => {
+        subCarts.includes(brand) ? null : subCarts.push(brand);
+    }); 
+    return subCarts;
+};
 
 function displayCartItems() {
-    createSubcarts();
+    subCarts = createSubcarts();
     cartItems.innerHTML = "";
     let cartItem = "";
     let grandTotal = 0;
-    subCarts.forEach( (manufacturer) => {
+    subCarts.forEach( (brand) => {
         let subtotal = 0;
         cartItem += `
             <div class="cart-item">
-                <h3>${manufacturer}</h3>
+                <h3>${brand}</h3>
         `;
         cart.forEach( (product) => {
-            if(product.manufacturer === manufacturer) {
+            if(product.brand === brand) {
                 let totalPrice = (product.price) * (product.quantity);
                 subtotal += totalPrice;
                 cartItem += `
                     <div class="added-item">
                         <ul class="item-details">
-                            <li class="item">${product.name}</li>
+                            <li class="item">${product.title}</li>
                             <li class="price product-subtotal">${totalPrice.toFixed(2)}</li>
                             <li class="quantity"><input type="number" value=${product.quantity}></li>
-                            <li class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id})">+</button><button class="less" onclick="changeQuantity('minus', ${product.id})">-</button></li>
+                            <li class="add-remove"><button class="more" onclick="changeQuantity('plus', ${product.id}, 1)">+</button><button class="less" onclick="changeQuantity('minus', ${product.id}, 1)">-</button></li>
                         </ul>
                         <button class="remove-item" onclick="removeFromCart(${product.id})"><i class="ph-trash-bold"></i></button>
                     </div>
                 `;
-            }
+            };
         });
         cartItem += `
                 <div class="subtotal">Total: ${subtotal.toFixed(2)} $</div>
@@ -110,26 +123,15 @@ function displayCartItems() {
 };
 
 
-function createSubcarts() {
-    subCarts = [];
-    const manufacturers = cart.map(product => `${product.manufacturer}`);
-    manufacturers.forEach((manufacturer) => {
-        subCarts.includes(manufacturer) ? null : subCarts.push(manufacturer);
-    });
-};
-
-
-
-
-
-function changeQuantity(action, id) {
+//Changing quantity of products in the cart
+function changeQuantity(action, id, addQuantity) {
     cart = cart.map((product) => {
-        let quantity = product.quantity;
+        let quantity = parseInt(product.quantity);
         if (product.id === id) {
             if (action === "minus" && product.quantity > 1) {
                 quantity--;
             } else if (action === "plus"){
-                quantity++;
+                quantity+= parseInt(addQuantity);
             }
         }
         return {
@@ -137,19 +139,12 @@ function changeQuantity(action, id) {
             quantity,
         };
     });
-    updateCart();
+    displayCartItems();
 };
 
+
+//Removing product from the cart
 function removeFromCart(id) {
     cart = cart.filter((item) => item.id !== id);
-    updateCart();
-};
-
-function updateCart() {
     displayCartItems();
-}
-
-window.changeQuantity = changeQuantity;
-window.removeFromCart = removeFromCart;
-window.addToCart = addToCart;
-window.update = update;
+};

@@ -9,8 +9,22 @@ h2 {
     font-weight: 700;
 }
 
+h4, h5 {
+    font-weight: 500;
+    margin: 0;
+}
+
+h4 {
+    font-size: 13px;
+}
+
+h5 {
+    font-size: 11px;
+}
+
 p { 
     margin: 0;
+    font-size: 10px;
 }
 
 .heading {
@@ -68,17 +82,34 @@ button {
             padding: 1em;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: auto;
+            grid-auto-rows: 1fr;
             gap: 1em;
-            align-items: start;
         }
 
         .shop-item {
             border: 1px solid #575757;
-            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1em;
 
-            img {
-                width: 100px;
+            .shop-item-hero {
+                display: flex;
+                flex-direction: row;
+                height: 50%;
+
+                .hero-headline {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                }
+
+                img {
+                    width: 50%;
+                    height: auto;
+                    margin-right: .2em;
+                    object-fit: cover;
+                }
             }
         }
 
@@ -161,6 +192,8 @@ button {
             .cart-item {
                 margin: 1em;
                 border: 1px solid #575757;
+                font-weight: 400;
+                font-size: 12px;
 
                 h3 {
                     padding-left: 1em;
@@ -186,7 +219,7 @@ button {
                         flex: 1;
 
                         .item {
-                            flex: 1.5;
+                            flex: 2;
                         }
 
                         .price {
@@ -194,7 +227,7 @@ button {
                         }
 
                         .quantity {
-                            flex: 1;
+                            flex: .5;
                         }
 
                         .add-remove {
@@ -234,7 +267,12 @@ button {
             padding: .5em 0;
             outline: 2px solid #777777;
             background-color: #dddddd;
-            font-weight: 700;
+
+            p {
+                font-weight: 700;
+                font-size: 14px;
+            }
+            
         }
     }
 }
