@@ -7,7 +7,7 @@ const cartItems = document.querySelector(".cart-items");
 const total = document.querySelector(".total-value");
 
 
-//Fetch and display products in the store
+//Fetching and displaying products in the store
 fetchProducts();
 async function fetchProducts() {
     const response = await fetch('https://dummyjson.com/products');
